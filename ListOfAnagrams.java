@@ -1,5 +1,6 @@
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 public class ListOfAnagrams {
@@ -10,11 +11,36 @@ public class ListOfAnagrams {
 	
 	
 	public static void main(String[] args) throws IOException{
-		
-		ArrayList<Anagram> stuff = getAnagramList("wordList.txt");
-		//System.out.println("we fucked up");
-		System.out.println(stuff);
+		Scanner scnr = new Scanner(System.in);
+		System.out.println("What file of words to you want to use?");
+		String filename = scnr.next();
+		ArrayList<Anagram> anagramList = getAnagramList(filename);
+		System.out.println("What word do you want to search for?");
+		String userWord = scnr.next();
+		String match = findAnagrams(userWord, anagramList);
+		System.out.println(match);
+		scnr.close();
 
+	}
+	
+	public static String findAnagrams(String word, ArrayList<Anagram> anagramList) {
+		String listOfWords = "No match found";
+		String wordKey = Anagram.computeKey(word);
+		//boolean isMatch = false;
+		for (int i = 0; i <= anagramList.size() - 1; i++) {
+			if (wordKey.equals(anagramList.get(i).getKey())) {
+				/*ArrayList<String> sourceWordList = anagramList.get(i).getValues();
+				for (int j = 0; j <= sourceWordList.size(); j++) {
+					if (listOfWords.equals("")) {
+						listOfWords = sourceWordList.get(j);
+					}
+				}*/
+				listOfWords = anagramList.get(i).toString();
+				//isMatch = true;
+				break;
+			}
+		}
+		return listOfWords;
 	}
 	
 	public static ArrayList<Anagram> getAnagramList(String filename) throws IOException {
@@ -31,13 +57,13 @@ public class ListOfAnagrams {
 			int i = 0;
 			Boolean equalsBool = false;
 			
-			while(i<anagramList.size() - 1 && equalsBool == false ) {
+			while(i<=anagramList.size() - 1 && equalsBool == false ) {
 				if (Anagram.computeKey(fileWord).equals(anagramList.get(i).getKey())) {
 					equalsBool = true;
 					anagramList.get(i).addWord(fileWord);
 				}
 				i++;
-				System.out.println("THis worked" + fileWord);
+				//System.out.println("THis worked" + fileWord);
 			}
 			
 			if (equalsBool == false) {
@@ -45,7 +71,7 @@ public class ListOfAnagrams {
 				anagramList.add(newWord);
 			}
 		}
-		
+		scnr.close();
 		return anagramList;
 	}
 	

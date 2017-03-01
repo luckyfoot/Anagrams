@@ -23,6 +23,21 @@ public class Anagram {
   return this.key;
  }
  
+ public String toString() {
+	 String listOfWords = "";
+	 for (int j = 0; j <= values.size() - 1; j++) {
+			if (listOfWords.equals("")) {
+				listOfWords = values.get(j);
+			}
+			else {
+				listOfWords += listOfWords + " " + values.get(j);
+			}
+	 }
+	 return listOfWords;
+ }
+ 
+ public ArrayList<String> getValues() {return this.values;}
+ 
  public void addWord(String word){
   this.values.add(word);
   return;
