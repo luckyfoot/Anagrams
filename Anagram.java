@@ -16,6 +16,7 @@ public class Anagram {
  
  public Anagram(String word){
   values = new ArrayList<String>();
+  values.add(word);
   key = computeKey(word);
  }
  
@@ -25,13 +26,34 @@ public class Anagram {
  
  public String toString() {
 	 String listOfWords = "";
-	 for (int j = 0; j <= values.size() - 1; j++) {
-			if (listOfWords.equals("")) {
-				listOfWords = values.get(j);
-			}
-			else {
-				listOfWords += listOfWords + " " + values.get(j);
-			}
+	 if (values.size() < 2) {
+		 listOfWords = values.get(0) + " has no anagrams.";
+	 }
+	 else {
+		 for (int j = 0; j <= values.size() - 1; j++) {
+			 if (listOfWords.equals("")) {
+				 listOfWords = values.get(j);
+			 }
+			 else {
+				 listOfWords += ", " + values.get(j);
+			 }
+		 }
+	 listOfWords += " are anagrams.";
+	 }
+	 return listOfWords;
+ }
+ 
+ public String toString(String word) {
+	 String listOfWords = "The anagrams of " + word + " are:";
+	 if (values.size() < 2) {
+		 listOfWords =  values.get(0) + " has no anagrams.";
+	 }
+	 else {
+		 for (int j = 0; j <= values.size() - 1; j++) {
+			 if (!values.get(j).equals(word)) {
+				 listOfWords += " " + values.get(j);
+			 }
+		 }
 	 }
 	 return listOfWords;
  }

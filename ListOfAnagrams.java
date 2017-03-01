@@ -12,11 +12,13 @@ public class ListOfAnagrams {
 	
 	public static void main(String[] args) throws IOException{
 		Scanner scnr = new Scanner(System.in);
-		System.out.println("What file of words to you want to use?");
+		//System.out.println("What file of words to you want to use?");
 		String filename = scnr.next();
 		ArrayList<Anagram> anagramList = getAnagramList(filename);
-		System.out.println("What word do you want to search for?");
-		String userWord = scnr.next();
+		//System.out.println("What word do you want to search for?");
+		printAllAnagrams(anagramList);
+		System.out.println("Enter a word to search for anagrams:");
+		String userWord = scnr.next().toLowerCase();
 		String match = findAnagrams(userWord, anagramList);
 		System.out.println(match);
 		scnr.close();
@@ -26,21 +28,25 @@ public class ListOfAnagrams {
 	public static String findAnagrams(String word, ArrayList<Anagram> anagramList) {
 		String listOfWords = "No match found";
 		String wordKey = Anagram.computeKey(word);
-		//boolean isMatch = false;
 		for (int i = 0; i <= anagramList.size() - 1; i++) {
 			if (wordKey.equals(anagramList.get(i).getKey())) {
-				/*ArrayList<String> sourceWordList = anagramList.get(i).getValues();
-				for (int j = 0; j <= sourceWordList.size(); j++) {
-					if (listOfWords.equals("")) {
-						listOfWords = sourceWordList.get(j);
-					}
-				}*/
-				listOfWords = anagramList.get(i).toString();
-				//isMatch = true;
+				listOfWords = anagramList.get(i).toString(word);
 				break;
 			}
 		}
 		return listOfWords;
+	}
+	
+	public static void printAllAnagrams(ArrayList<Anagram> anagramList) {
+		for (int i = 0; i <= anagramList.size() - 1; i++) {
+			/*if (anagramList.get(i).getValues().size() > 1) {
+				System.out.println(anagramList.get(i).toString());
+			}
+			else {
+				System.out.println(anagramList.get(i).toString());
+			}*/
+			System.out.println(anagramList.get(i).toString());
+		}
 	}
 	
 	public static ArrayList<Anagram> getAnagramList(String filename) throws IOException {
